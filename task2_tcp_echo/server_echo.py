@@ -10,25 +10,25 @@ def main():
         if 0 <= local_port <= 65535:
             break
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    if s:
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    if server_socket:
         log("Socket created")
-    s.bind((local_ip, local_port))
+    server_socket.bind((local_ip, local_port))
     log("Bound")
-    s.listen(1)
+    server_socket.listen(1)
     log(f"Listening on {local_ip} on port {local_port}")
     while True:
-        c, address = s.accept()
+        client_socket, address = server_socket.accept()
         log(f"Connection from {address[0]}:{address[1]}")
         while True:
             try:
-                buffer = c.recv(64)
+                buffer = client_socket.recv(64)
                 if len(buffer) == 0:
                     break
             except ConnectionResetError:
                 break
             log(f"Received: {buffer}")
-            c.send(buffer)
+            client_socket.send(buffer)
             log(f"Sent: {buffer}")
 
         log(f"{address[0]}:{address[1]} disconnected")
@@ -38,7 +38,8 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        log("Exiting")
+        print()
+        print("Exiting")
         pass
     except Exception as e:
         print(f"An error occurred: {e}")
