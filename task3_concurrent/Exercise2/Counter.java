@@ -7,22 +7,20 @@ public class Counter {
     private final Thread thread;
     private final Set<Runnable> doOnCount = new HashSet<>();
     private int count = 0;
-    private String state = "";
 
     public Counter() {
         thread = new Thread(() -> {
             while (true) {
+                Thread.yield();
                 synchronized (Counter.class) {
                     ++count;
                     for (Runnable action : doOnCount) {
                         action.run();
                     }
-                    state = "(waiting)";
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException ignored) {
-                    } finally {
-                        state = "";
+
                     }
                 }
             }
@@ -50,7 +48,7 @@ public class Counter {
 
     @Override
     public String toString() {
-        return getCount() + " " + state;
+        return getCount() + "";
     }
 
 }
