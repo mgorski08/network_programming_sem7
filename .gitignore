@@ -4,3 +4,4 @@ venv
 *.jar
 *.iml
 *.class
+*.MF
