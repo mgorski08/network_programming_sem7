@@ -9,12 +9,12 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-public class UDPEchoer implements Runnable {
-    private static final Logger log = LogManager.getLogger(UDPEchoer.class);
+public class UDPListener implements Runnable {
+    private static final Logger log = LogManager.getLogger(UDPListener.class);
 
     private final DatagramSocket datagramSocket;
 
-    public UDPEchoer(int port) throws SocketException {
+    public UDPListener(int port) throws SocketException {
         datagramSocket = new DatagramSocket(port);
         datagramSocket.setSoTimeout(500);
     }
@@ -27,7 +27,6 @@ public class UDPEchoer implements Runnable {
         while (true) {
             try {
                 datagramSocket.receive(datagramPacket);
-                datagramSocket.send(datagramPacket);
             } catch (SocketTimeoutException e) {
                 if (Thread.interrupted()) {
                     break;

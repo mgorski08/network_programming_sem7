@@ -15,10 +15,10 @@ class Application {
         final int port = UserInput.readInt("Port", 12345);
 
         try {
-            Thread udpEchoerThread = new Thread(new UDPEchoer(port), "UDP("+port+")");
-            udpEchoerThread.start();
+            Thread udpListenerThread = new Thread(new UDPListener(port), "UDP("+port+")");
+            udpListenerThread.start();
             Thread.sleep(5000);
-            udpEchoerThread.interrupt();
+            udpListenerThread.interrupt();
         } catch (SocketException | InterruptedException e) {
             log.error(e);
         }

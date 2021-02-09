@@ -3,26 +3,29 @@ package cf.mgorski.np.exam1_speedtester;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.net.*;
+import java.io.*;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 
-public class TCPListener implements Runnable {
+public class TCPClientHandler implements Runnable {
     private static final Logger log = LogManager.getLogger(TCPListener.class);
+    InputStreamReader is;
+    OutputStreamWriter os;
+    private final Socket socket;
 
-    private final ServerSocket serverSocket;
-
-    public TCPListener(int port) throws IOException {
-        serverSocket = new ServerSocket(port);
-        serverSocket.setSoTimeout(500);
+    public TCPClientHandler(Socket socket) throws IOException {
+        this.socket = socket;
+        is = new InputStreamReader(socket.getInputStream());
+        os = new OutputStreamWriter(socket.getOutputStream());
+        OutputStream os = socket.getOutputStream();
     }
 
     @Override
     public void run() {
-        log.info("Listening for TCP connections on port " + serverSocket.getLocalPort());
+        log.info("Connection from " + socket.getInetAddress());
         while (true) {
             try {
-                Socket socket = serverSocket.accept();
-                TCPClientHandler tcpClientHandler = new TCPClientHandler(socket);
+                is.read();
             } catch (SocketTimeoutException e) {
                 if (Thread.interrupted()) {
                     break;
