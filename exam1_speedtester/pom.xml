@@ -29,6 +29,7 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <!--suppress MavenModelInspection -->
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <archive>
