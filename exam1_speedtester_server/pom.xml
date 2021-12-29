@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cf.mgorski.np</groupId>
-    <artifactId>exam1_speedtester</artifactId>
+    <artifactId>exam1_speedtester_server</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -17,12 +17,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.14.0</version>
+            <version>2.17.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.14.0</version>
+            <version>2.17.0</version>
         </dependency>
     </dependencies>
     <build>
@@ -34,7 +34,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cf.mgorski.np.exam1_speedtester.Application</mainClass>
+                            <mainClass>cf.mgorski.np.exam1_speedtester_server.Application</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -48,7 +48,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>cf.mgorski.np.exam1_speedtester.Application</mainClass>
+                            <mainClass>cf.mgorski.np.exam1_speedtester_server.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

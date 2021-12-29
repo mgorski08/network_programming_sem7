@@ -1,15 +1,17 @@
-package cf.mgorski.np.exam1_speedtester;
+package cf.mgorski.np.exam1_speedtester_server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.*;
 
 public class TCPListener implements Runnable {
     private static final Logger log = LogManager.getLogger(TCPListener.class);
 
     private final ServerSocket serverSocket;
+    private Thread tcpClientHandlerThread = null;
 
     public TCPListener(int port) throws IOException {
         serverSocket = new ServerSocket(port);
@@ -20,9 +22,20 @@ public class TCPListener implements Runnable {
     public void run() {
         log.info("Listening for TCP connections on port " + serverSocket.getLocalPort());
         while (true) {
+            if (Thread.interrupted()) {
+                break;
+            }
             try {
                 Socket socket = serverSocket.accept();
-                TCPClientHandler tcpClientHandler = new TCPClientHandler(socket);
+                if (tcpClientHandlerThread == null || !tcpClientHandlerThread.isAlive()) {
+                    tcpClientHandlerThread = new Thread(new TCPClientHandler(socket), "TCP Handler (" + socket.getRemoteSocketAddress().toString() + ")");
+                    tcpClientHandlerThread.start();
+                } else {
+                    OutputStreamWriter osw = new OutputStreamWriter(socket.getOutputStream());
+                    osw.write("BUSY");
+                    osw.close();
+                    log.info("Sent BUSY");
+                }
             } catch (SocketTimeoutException e) {
                 if (Thread.interrupted()) {
                     break;

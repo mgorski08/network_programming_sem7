@@ -1,4 +1,4 @@
-package cf.mgorski.np.exam1_speedtester;
+package cf.mgorski.np.exam1_speedtester_server;
 
 import java.util.Scanner;
 
