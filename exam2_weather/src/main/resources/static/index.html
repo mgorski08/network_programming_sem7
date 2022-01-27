@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <title>Weather app Michał Górski 217719</title>
+    </head>
+    <body>
+        <table id="mainTable">
+        </table>
+        <p>Days: <span id="days"></span>, Samples: <span id="samples"></span></p>
+        <p>Select mode:</p>
+        <select id="modeSelector" onchange="onModeChange()">
+            <option value="latest">Latest data</option>
+            <option value="1">1 day average</option>
+            <option value="2">2 days average</option>
+            <option value="3">3 days average</option>
+            <option value="4">4 days average</option>
+            <option value="5">5 days average</option>
+        </select>
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,12 @@
+#mainTable {
+    border-collapse: collapse;
+}
+
+#mainTable td {
+    border: 1px solid black;
+}
+
+#mainTable td.header {
+    font-weight: bold;
+    background: #5793ff;
+}
