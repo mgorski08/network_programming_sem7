@@ -1,7 +1,7 @@
+target
 .idea
-venv
-*.pyc
-*.jar
-*.iml
 *.class
-*.MF
+*.iws
+*.iml
+*.ipr
+auth.txt
