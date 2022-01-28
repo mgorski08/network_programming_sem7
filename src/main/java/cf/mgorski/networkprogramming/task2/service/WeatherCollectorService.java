@@ -21,10 +21,13 @@ import java.time.Instant;
 public class WeatherCollectorService {
     private final Log logger = LogFactory.getLog(this.getClass());
     WebClient client = WebClient.create();
+
     @Autowired
     CityRepository cityRepository;
+
     @Autowired
     WeatherDataRepository weatherDataRepository;
+
     @Value("${weather.apikey}")
     private String apikey;
 
@@ -42,7 +45,7 @@ public class WeatherCollectorService {
         return weatherData;
     }
 
-    @Scheduled(fixedDelay = 5 * 60 * 1000)
+    @Scheduled(fixedDelayString = "${weather.polling_rate}")
     void collectWeatherData() {
         for (City city : this.cityRepository.findAll()) {
             SampledWeatherData weatherData = this.getCurrentWeather(city);
