@@ -8,6 +8,7 @@ import cf.mgorski.networkprogramming.task2.repository.WeatherDataRepository;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,10 +25,12 @@ public class WeatherCollectorService {
     CityRepository cityRepository;
     @Autowired
     WeatherDataRepository weatherDataRepository;
+    @Value("${weather.apikey}")
+    private String apikey;
 
     public SampledWeatherData getCurrentWeather(City city) {
         SampledWeatherData weatherData = new SampledWeatherData();
-        ResponseSpec responseSpec = this.client.get().uri("http://api.openweathermap.org/data/2.5/weather?id=" + city.getOpenWeatherId() + "&appid=eb9f21cb6e8999b97ce6d2b5ed0aebf7&units=metric", new Object[0]).retrieve();
+        ResponseSpec responseSpec = this.client.get().uri("http://api.openweathermap.org/data/2.5/weather?id=" + city.getOpenWeatherId() + "&appid=" + apikey + "&units=metric", new Object[0]).retrieve();
         OpenWeatherResponse response = responseSpec.bodyToMono(OpenWeatherResponse.class).block();
         weatherData.setTimestamp(Timestamp.from(Instant.now()));
         weatherData.setCity(city);
